@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="timer.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="task-display">
+                <h1 id="taskDisplay">...</h1>
+            </div>
+            <div class="nav-elements"> 
+                <a href="dashboard.html" id="dashboardLink">Dashboard</a>
+            </div>
+        </nav>
+        <div class="bottom-content">
+            <div class="prog-time-control">
+                <div class="prog-time">
+                    <div class="prog">
+                        <div class="progress-container">
+                            <div class="progress-bar-background"></div>
+                            <div class="progress-bar" id="progressBar"></div>
+                            <div class="timer-display" id="timerDisplay">-- : --</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="control">
+                    <div class="timer-controls">
+                        <button id="startBtn">Start</button>
+                        <button id="pauseBtn" disabled>Pause</button>
+                        <button id="resetBtn">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tasks-container">
+                <div class="tasks"><h2>Tasks</h2></div>
+            </div>
+
+            <div class="curtime-deck">
+                <div class="curtime">
+                    <h1 id="currentTime">10:12</h1>
+                    <h2 id="currentDay">#daynamehere</h2>
+                    <h2 id="currentDate">#datehere</h2>
+                </div>
+                <div class="deck">
+                    <p>Controls such as Spotify, Change Background, Fullscreen, DND-mode etc will be added here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="timer.js"></script>
+</body>
+</html>

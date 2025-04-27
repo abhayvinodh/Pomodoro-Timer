@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>Pomodoro Timer</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo-name">
+                <h1>Pomodoro Timer</h1>
+            </div>
+            <div class="nav-elements"> 
+                <a href="login.html">Logout</a>
+            </div>
+        </nav>
+        <div class="bottom-content">
+            <div class="pomo-history">
+                <h3>History</h3>
+                <li>Assignment work</li>
+                <li>Record writing</li>
+                <li>Lab exam prep.</li>
+                <li>Sem exam prep.</li>
+                <li>..other History here</li>
+            </div>
+            <div class="time-addtask">
+                <div class="timediv">
+                    <div class="no-tasks">
+                        <h2>No Tasks! Create new Timer below</h2>
+                    </div>
+
+                    <div class="time">
+                      <h2 id="live-clock">--:--</h2>
+                      <h3 id="live-date">Loading...</h3>
+                    </div>
+                    
+                </div>
+                <div class="addtask">
+                    <div class="addtaskborder">
+                        <h2>ADD TASK+ </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Task Modal -->
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+        <span id="close-modal" class="close">&times;</span>
+    
+        <!-- Step 1: Main Title & Timer -->
+        <div id="initial-form">
+            <h2>Create New Pomodoro</h2>
+            <div class="form-group">
+            <label for="main-title">Main Title</label>
+            <input type="text" id="main-title" placeholder="e.g. Study Session" />
+            </div>
+            <div class="form-group">
+            <label for="main-timer">Timer (minutes)</label>
+            <input type="number" id="main-timer" placeholder="e.g. 25" min="1" />
+            </div>
+            <button id="save-main-btn">Next ➔</button>
+        </div>
+    
+        <!-- Step 2: Sub‑Tasks -->
+        <div id="subtask-form" style="display:none;">
+            <h2>What will you accomplish?</h2>
+            <div id="subtasks-container">
+            <!-- dynamically added subtask inputs go here -->
+            </div>
+            <button id="add-subtask-btn">Add Task</button>
+            <button id="start-btn" style="display:none;">Start Pomodoro</button>
+        </div>
+        </div>
+    </div>
+  
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+          // Real-time clock
+          function updateDateTime() {
+              const now = new Date();
+              document.getElementById('live-clock').textContent = 
+                  now.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
+              document.getElementById('live-date').textContent = 
+                  now.toLocaleDateString('en-US', {weekday: 'long', month: 'long', day: 'numeric'});
+          }
+          setInterval(updateDateTime, 1000);
+          updateDateTime();
+      
+          // Pomodoro creation logic
+          const addBtn = document.querySelector(".addtaskborder");
+          const modal = document.getElementById("task-modal");
+          const closeModal = document.getElementById("close-modal");
+          const initialForm = document.getElementById("initial-form");
+          const subtaskForm = document.getElementById("subtask-form");
+          const mainTitleIn = document.getElementById("main-title");
+          const mainTimerIn = document.getElementById("main-timer");
+          const saveMainBtn = document.getElementById("save-main-btn");
+          const subtasksCont = document.getElementById("subtasks-container");
+          const addSubBtn = document.getElementById("add-subtask-btn");
+          const startBtn = document.getElementById("start-btn");
+      
+          let session = {};
+      
+          function renderSubtasks() {
+              subtasksCont.innerHTML = "";
+              (session.subtasks || []).forEach((text, idx) => {
+                  const row = document.createElement("div");
+                  row.className = "subtask-item";
+                  row.innerHTML = `
+                      <input 
+                          type="text" 
+                          placeholder="Task ${idx + 1}" 
+                          value="${text.replace(/"/g,'&quot;')}" 
+                          data-idx="${idx}"
+                      >
+                      <button class="delete-subtask-btn" data-idx="${idx}">&times;</button>
+                  `;
+                  subtasksCont.appendChild(row);
+              });
+      
+              subtasksCont.querySelectorAll("input").forEach(input => {
+                  input.addEventListener("input", e => {
+                      const i = +e.target.dataset.idx;
+                      session.subtasks[i] = e.target.value;
+                  });
+              });
+      
+              subtasksCont.querySelectorAll(".delete-subtask-btn").forEach(btn => {
+                  btn.addEventListener("click", e => {
+                      const i = +e.target.dataset.idx;
+                      session.subtasks.splice(i, 1);
+                      renderSubtasks();
+                  });
+              });
+      
+              startBtn.style.display = session.subtasks?.some(t => t.trim()) ? "block" : "none";
+          }
+      
+          addBtn.addEventListener("click", () => {
+              session = {};
+              initialForm.style.display = "flex";
+              subtaskForm.style.display = "none";
+              mainTitleIn.value = "";
+              mainTimerIn.value = "";
+              subtasksCont.innerHTML = "";
+              startBtn.style.display = "none";
+              modal.style.display = "flex";
+          });
+      
+          closeModal.addEventListener("click", () => modal.style.display = "none");
+          window.addEventListener("click", e => e.target === modal && (modal.style.display = "none"));
+      
+          saveMainBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              const title = mainTitleIn.value.trim();
+              const timer = parseInt(mainTimerIn.value, 10);
+              if (!title || !timer) return alert("Please enter valid title and timer.");
+              
+              session.mainTitle = title;
+              session.mainTimer = timer;
+              session.subtasks = [];
+              initialForm.style.display = "none";
+              subtaskForm.style.display = "flex";
+              renderSubtasks();
+          });
+      
+          addSubBtn.addEventListener("click", () => {
+              session.subtasks.push("");
+              renderSubtasks();
+          });
+      
+          startBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              const finalTasks = session.subtasks.filter(t => t.trim());
+              if (!finalTasks.length) return alert("Add at least one subtask.");
+              
+              const pomodoroSession = {
+                  mainTitle: session.mainTitle,
+                  timer: session.mainTimer,
+                  subtasks: finalTasks,
+                  created: new Date().toISOString()
+              };
+              localStorage.setItem('currentPomodoro', JSON.stringify(pomodoroSession));
+              window.location.href = 'timer.html';
+          });
+      });
+      </script>
+</body>
+</html>
