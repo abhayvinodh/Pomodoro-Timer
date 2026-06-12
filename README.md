@@ -7,7 +7,11 @@ It features **focused work sessions**, **break intervals**, **real-time clocks**
 ## SEE THE PROJECT HERE : 
 **[<<< OPEN WEBSITE >>>](https://abhayvinodh.github.io/Pomodoro-Timer/)** 
 
-**⚠Note :** *The website may not dislay as intended on Mobile displays. For better experience view it from a laptop of monitor display*
+
+| |
+| :--- |
+| **⚠Note :** *This site is optimized for desktop and monitor displays* |
+
 ---
 
 ## 📂 Table of Contents
