@@ -5,11 +5,11 @@ A simple and powerful **Pomodoro Timer Web Application** designed to help users 
 It features **focused work sessions**, **break intervals**, **real-time clocks**, a **progress bar**, and **task tracking** — all in a clean, interactive interface.
 
 ## SEE THE PROJECT HERE : 
-**[<<< OPEN WEBSITE >>>](https://abhayvinodh.github.io/Pomodoro-Timer/)** 
 
 
-| |
-| :--- |
+
+| **[<<< OPEN WEBSITE >>>](https://abhayvinodh.github.io/Pomodoro-Timer/)** |
+| :---: |
 | **⚠Note :** *This site is optimized for desktop and monitor displays* |
 
 ---
