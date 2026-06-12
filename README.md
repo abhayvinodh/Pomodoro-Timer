@@ -1,4 +1,4 @@
-# 🕒 Pomodoro Timer Web App
+# 🕒 Pomodoro Timer Web App (College project)
 
 ## 📜 Project Description
 A simple and powerful **Pomodoro Timer Web Application** designed to help users **manage their time effectively across multiple tasks**.  
@@ -44,17 +44,6 @@ It features **focused work sessions**, **break intervals**, **real-time clocks**
 - Displays current task.
 - Progress visualization.
 - Timer control buttons (Start, Pause, Reset).
-
----
-
-## 👥 Team Members
-| Name       | Role                        |
-|------------|------------------------------|
-| Abhay      | Front-End Development & Ui/Ux Designer |
-| Arya       | System Architect & Project Lead |
-| Akmal      | Performance Analyst     |
-| Minha      | Report Editor |
-| Dilruba    | Strategic Architect          |
 
 ---
 
